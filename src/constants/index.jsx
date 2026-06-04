@@ -1,9 +1,4 @@
-import { BotMessageSquare } from "lucide-react";
-import { BatteryCharging } from "lucide-react";
-import { Fingerprint } from "lucide-react";
-import { ShieldHalf } from "lucide-react";
-import { PlugZap } from "lucide-react";
-import { GlobeLock } from "lucide-react";
+import { Code, Layout, ShieldCheck, Zap, MessageSquare, BarChart3 } from "lucide-react";
 
 import user1 from "../assets/profile-pictures/user1.jpg";
 import user2 from "../assets/profile-pictures/user2.jpg";
@@ -13,10 +8,10 @@ import user5 from "../assets/profile-pictures/user5.jpg";
 import user6 from "../assets/profile-pictures/user6.jpg";
 
 export const navItems = [
-    {label:"Features",href:"#"},
-    {label:"Workflow", href:"#"},
-    {label:"Pricing",href:"#"},
-    {label:"Testimonials",href:"#"}
+    {label:"Features",href:"#features"},
+    {label:"Workflow", href:"#workflow"},
+    {label:"Pricing",href:"#pricing"},
+    {label:"Testimonials",href:"#testimonials"}
 ]
 
 export const testimonials=[
@@ -24,147 +19,147 @@ export const testimonials=[
         user:"John Doe",
         company:"Stellar Solutions",
         image:user1,
-        text:"I am extemelly satisfied with the  services privided. The team was responsive, professional, and delivered results beyond my  expectations.",
+        text:"The quotation tool helped me get a clear breakdown of costs for my corporate site. Very professional service and the final website exceeded expectations.",
     },
     {
         user: "Jane Smith",
         company: "Blue Horizon Technologies",
         image:user2,
-        text:"I couldn't be happier with the outcome of our project. The team's creativity and problem-solving skills were insturmental  in bringing  our vision to life.",
+        text:"I love how transparent the pricing was from the start. The team's expertise in React and Tailwind made our e-commerce site incredibly fast.",
     },
     {
         user:"David Johnson",
-        compayn: "Quantum Innovatons",
+        company: "Quantum Innovations",
         image: user3,
-        text:"Working with this company was a pleasure. Their attention to detail and commitment to excellence are commendable. I would highly recommend them to anyonw looking for top-notch service.",
+        text:"The discovery questions really helped me understand what I needed for my portfolio. The quotation was spot on and delivery was timely.",
     },
     {
         user:"Ronee Brown",
         company:"Fusion Dynamics",
         image:user4,
-        text:"Working with team at XYZ Company was a game-changer for our project. Their attention to detail and innovation solutions helped us achieve  our goals faster than we thought possible. We are grateful for their expertise  and professionalism!.",
+        text:"Working with this team was a game-changer. They didn't just build a site; they provided a full toolkit to manage my digital presence.",
     },
     {
         user:"Michael Wilson",
         company:"Visionary Creations",
         image:user5,
-        text:"I am amazed by the level of professionalism and dedication shown by the team. They were able to exceed our expectations and deliver outstanding results.",
+        text:"I've used many web devs before, but the clarity and professionalism here are unmatched. The quotation system is brilliant.",
     },
     {
         user:"Emily Davis",
         company:"Synergy Systems",
         image:user6,
-        text:"The team went above and veyond to ensure our project was a succcess. Their expertise and dedication are unmatched. I look forward to  working with them again  in the future."
+        text:"The team went above and beyond. From initial quote to final deployment, every step was documented and transparent.",
     }
 ]
 
 export const features = [
     {
-        icon:<BotMessageSquare/>,
-        text: "Drag-and-Drop Interface",
-        description:"Easily design and arrange your VR environments with a user -friendly drag-and-drop interface"
+        icon:<Code/>,
+        text: "Custom Development",
+        description:"High-quality, clean code tailored to your specific business needs and goals."
     },
     {
-        icon:<Fingerprint/>,
-        text:"Multi-Platform Compatibility",
-        description:"Build VR applications that run seamlessly across multiple platforms, inlcuding mobile, desktop, and VR headset"
+        icon:<Layout/>,
+        text:"Responsive Design",
+        description:"Websites that look and perform beautifully on all devices, from mobiles to desktops."
     },
     {
-        icon:<ShieldHalf/>,
-        text:"Built-in Templates",
-        description:"Jumpstart your VR projects with a variety of built-in templates for different types of applications and environments.",
+        icon:<ShieldCheck/>,
+        text:"Secure by Default",
+        description:"Implementing industry-standard security protocols to protect your data and users.",
     },
     {
-        icon:<BatteryCharging/>,
-        text:"Real-Time Preview",
-        description:"Preview your VR application in real-time as you make changes, allowing for quick iterations and adjustments."
+        icon:<Zap/>,
+        text:"High Performance",
+        description:"Optimized loading speeds and smooth interactions for the best user experience."
     },
     {
-        icon:<PlugZap/>,
-        text:"Collaboration Tools",
-        description:"Work together with your team in real-time on VR projects, enabling seamless collaboration and idea sharing.",
+        icon:<MessageSquare/>,
+        text:"Consultation & Support",
+        description:"Expert advice throughout the development process and reliable post-launch support.",
     },
     {
-        icon:<GlobeLock/>,
-        text:"Analytics Dashboard",
-        description:"Gain valuable insights into user interactions and behaviour within your VR applications with an integrated analytics dashboard"
+        icon:<BarChart3/>,
+        text:"SEO Optimized",
+        description:"Built with SEO best practices to help your website rank better on search engines."
     }
 ]
 
 export const checklistItems = [
     {
-        title:"Code merge made easy",
-        description:"Track the performance of your VR apps and gain insights into user behaviour."
+        title:"Discovery & Strategy",
+        description:"We start by understanding your goals and planning the perfect structure for your site."
     },
     {
-        title:"Review code without worry",
-        description:"Track the performance of your VR apps and gain insights into user behaviour."
+        title:"Design & Prototyping",
+        description:"Visualizing your website before a single line of code is written to ensure alignment."
     },
     {
-        title: "AI Assistance to reduce time",
-        description:"Track the performance of your VR apps and gain insights into user behaviour."
+        title: "Development & Testing",
+        description:"Building your site with modern tech stacks and rigorous quality assurance."
     },
     {
-        title:"Share work in minutes",
-        description:"Track the performance of your VR apps and gain insights into user behaviour."
+        title:"Deployment & Launch",
+        description:"Going live on your preferred hosting with full optimization and final checks."
     }
 ]
 
 export const pricingOptions = [
     {
-        title:"Free",
-        price:"$0",
+        title:"Starter",
+        price:"$500",
         features:[
-            "Private board sharing",
-            "5Gb Storage",
-            "Web Analytics",
-            "Private Mode",
+            "Single Page Landing",
+            "Responsive Design",
+            "Contact Form",
+            "1 Month Support",
         ]
     },
     {
-        title:"Pro",
-        price:"$10",
+        title:"Professional",
+        price:"$1,500",
         features:[
-            "Private board sharing",
-            "10 Gb Storage",
-            "Web Analytics(Advance",
-            "Private Mode"
+            "Up to 5 Pages",
+            "Custom UI/UX Design",
+            "CMS Integration",
+            "3 Months Support"
         ]
     },
     {
-        title:"Enterprise",
-        price:"$200",
+        title:"E-commerce",
+        price:"$3,000",
         features:[
-            "Private board sharing",
-            "Unlimited Storage",
-            "High Performance Network",
-            "Private Mode"
+            "Full Store Setup",
+            "Payment Integration",
+            "Inventory Management",
+            "6 Months Support"
         ]
     }
 
 ]
 
 export const resourcesLinks =[
-    {href:"#",text:"Getting Started"},
-    {href:"#", text:"Documentation"},
-    {href:"#", text:"Tutorials"},
-    {href:"#", text:"API Reference"},
-    {href:"#",text:"Community Forums"},
+    {href:"#",text:"Quotation Guide"},
+    {href:"#", text:"Portfolio"},
+    {href:"#", text:"Services"},
+    {href:"#", text:"Blog"},
+    {href:"#",text:"Contact Us"},
 ]
 
 
 export const platformLinks= [
-    {href:"#",text:"Features"},
-    {href:"#", text:"Supported Devices"},
-    {href:"#", text:"System Requirements"},
-    {href:"#", text:"Downloads"},
-    {href:"#", text:"Releae Notes"}
+    {href:"#",text:"React"},
+    {href:"#", text:"Next.js"},
+    {href:"#", text:"Tailwind CSS"},
+    {href:"#", text:"Node.js"},
+    {href:"#", text:"PostgreSQL"}
 ]
 
 export const  communityLinks = [
-    {href:"#", text:"Events"},
-    {href:"#", text:"Meetups"},
-    {href:"#", text:"Conferences"},
-    {href:"#",text:"Hackathons"},
-    {href:"#", text:"Jobs"}
+    {href:"#", text:"LinkedIn"},
+    {href:"#", text:"GitHub"},
+    {href:"#", text:"Twitter"},
+    {href:"#",text:"Instagram"},
+    {href:"#", text:"Email"}
 ]

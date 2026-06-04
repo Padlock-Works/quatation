@@ -1,0 +1,308 @@
+
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: var(--font-sans); color: var(--color-text-primary); }
+  .wrap { padding: 1.5rem 0; }
+  .tabs { display: flex; gap: 8px; margin-bottom: 1.5rem; flex-wrap: wrap; }
+  .tab { padding: 8px 16px; border-radius: var(--border-radius-md); border: 0.5px solid var(--color-border-secondary); background: transparent; cursor: pointer; font-size: 14px; color: var(--color-text-secondary); transition: all 0.15s; }
+  .tab.active { background: var(--color-background-info); color: var(--color-text-info); border-color: var(--color-border-info); font-weight: 500; }
+  .section { display: none; }
+  .section.active { display: block; }
+  .card { background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); padding: 1.25rem; margin-bottom: 1rem; }
+  .label { font-size: 13px; color: var(--color-text-secondary); margin-bottom: 6px; display: block; }
+  .row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+  .row3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+  select, input[type=range] { width: 100%; }
+  .val { font-size: 14px; font-weight: 500; color: var(--color-text-primary); }
+  .price-card { background: var(--color-background-secondary); border-radius: var(--border-radius-md); padding: 1rem; text-align: center; }
+  .price-num { font-size: 24px; font-weight: 500; color: var(--color-text-info); }
+  .price-label { font-size: 12px; color: var(--color-text-secondary); margin-top: 4px; }
+  .price-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; margin: 1rem 0; }
+  .breakdown { border-top: 0.5px solid var(--color-border-tertiary); margin-top: 1rem; padding-top: 1rem; }
+  .brow { display: flex; justify-content: space-between; font-size: 13px; padding: 4px 0; color: var(--color-text-secondary); }
+  .brow.total { font-weight: 500; color: var(--color-text-primary); font-size: 15px; border-top: 0.5px solid var(--color-border-secondary); margin-top: 6px; padding-top: 8px; }
+  .tip-item { display: flex; gap: 12px; align-items: flex-start; padding: 10px 0; border-bottom: 0.5px solid var(--color-border-tertiary); }
+  .tip-item:last-child { border-bottom: none; }
+  .tip-icon { width: 32px; height: 32px; border-radius: var(--border-radius-md); display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 16px; }
+  .tip-icon.blue { background: var(--color-background-info); color: var(--color-text-info); }
+  .tip-icon.green { background: var(--color-background-success); color: var(--color-text-success); }
+  .tip-icon.amber { background: var(--color-background-warning); color: var(--color-text-warning); }
+  .tip-title { font-size: 14px; font-weight: 500; margin-bottom: 3px; }
+  .tip-body { font-size: 13px; color: var(--color-text-secondary); line-height: 1.5; }
+  .q-item { padding: 10px 12px; border-left: 2px solid var(--color-border-info); margin-bottom: 8px; background: var(--color-background-secondary); border-radius: 0 var(--border-radius-md) var(--border-radius-md) 0; font-size: 14px; color: var(--color-text-secondary); line-height: 1.5; }
+  .q-group-title { font-size: 13px; font-weight: 500; color: var(--color-text-secondary); margin: 1rem 0 6px; text-transform: uppercase; letter-spacing: 0.05em; }
+  .badge { display: inline-block; font-size: 11px; padding: 2px 8px; border-radius: var(--border-radius-md); margin-left: 8px; }
+  .badge.rec { background: var(--color-background-success); color: var(--color-text-success); }
+  h3 { font-size: 16px; font-weight: 500; margin-bottom: 1rem; }
+  .toggle-row { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+  .toggle { position: relative; width: 40px; height: 22px; flex-shrink: 0; }
+  .toggle input { opacity: 0; width: 0; height: 0; }
+  .slider-t { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background: var(--color-border-secondary); border-radius: 22px; transition: 0.2s; }
+  .slider-t:before { position: absolute; content: ""; height: 16px; width: 16px; left: 3px; bottom: 3px; background: white; border-radius: 50%; transition: 0.2s; }
+  input:checked + .slider-t { background: #378ADD; }
+  input:checked + .slider-t:before { transform: translateX(18px); }
+  .toggle-label { font-size: 14px; color: var(--color-text-secondary); }
+  .note { font-size: 12px; color: var(--color-text-tertiary); margin-top: 8px; font-style: italic; }
+  .ask-btn { margin-top: 1rem; }
+</style>
+
+<div class="wrap">
+  <h2 style="sr-only">Lodging BMS Quotation Toolkit</h2>
+  <div class="tabs">
+    <button class="tab active" onclick="showTab('quote')"><i class="ti ti-calculator" aria-hidden="true"></i> Quotation</button>
+    <button class="tab" onclick="showTab('discover')"><i class="ti ti-clipboard-list" aria-hidden="true"></i> Discovery questions</button>
+    <button class="tab" onclick="showTab('marketing')"><i class="ti ti-speakerphone" aria-hidden="true"></i> Marketing tips</button>
+  </div>
+
+  <!-- QUOTATION -->
+  <div id="tab-quote" class="section active">
+    <div class="card">
+      <h3>Client profile</h3>
+      <div class="row">
+        <div>
+          <label class="label">Property type</label>
+          <select id="propType" onchange="calc()">
+            <option value="guesthouse">Guesthouse / B&B</option>
+            <option value="hotel">Small hotel</option>
+            <option value="lodge">Safari / eco lodge</option>
+            <option value="hostel">Hostel</option>
+            <option value="resort">Resort / camp</option>
+          </select>
+        </div>
+        <div>
+          <label class="label">Number of rooms</label>
+          <select id="rooms" onchange="calc()">
+            <option value="5">1–5 rooms</option>
+            <option value="15">6–15 rooms</option>
+            <option value="30">16–30 rooms</option>
+            <option value="50">31–50 rooms</option>
+            <option value="80">51+ rooms</option>
+          </select>
+        </div>
+      </div>
+
+      <h3 style="margin-top:1rem">What they need</h3>
+      <div class="toggle-row">
+        <label class="toggle"><input type="checkbox" id="chk-bms" checked onchange="calc()"><span class="slider-t"></span></label>
+        <span class="toggle-label">Booking management system (BMS)</span>
+      </div>
+      <div class="toggle-row">
+        <label class="toggle"><input type="checkbox" id="chk-web" onchange="calc()"><span class="slider-t"></span></label>
+        <span class="toggle-label">Public website</span>
+      </div>
+      <div class="toggle-row">
+        <label class="toggle"><input type="checkbox" id="chk-online" onchange="calc()"><span class="slider-t"></span></label>
+        <span class="toggle-label">Online booking (guests book directly)</span>
+      </div>
+      <div class="toggle-row">
+        <label class="toggle"><input type="checkbox" id="chk-pay" onchange="calc()"><span class="slider-t"></span></label>
+        <span class="toggle-label">Payment integration (M-Pesa / card)</span>
+      </div>
+
+      <h3 style="margin-top:1rem">Hosting preference</h3>
+      <div class="row">
+        <div>
+          <label class="label">Deployment</label>
+          <select id="hosting" onchange="calc()">
+            <option value="local">Local only (their machine)</option>
+            <option value="shared">Shared hosting (basic)</option>
+            <option value="vps">VPS / cloud (recommended)</option>
+          </select>
+        </div>
+        <div>
+          <label class="label">Support contract</label>
+          <select id="support" onchange="calc()">
+            <option value="none">No support</option>
+            <option value="basic">Basic (email, 48h)</option>
+            <option value="premium">Premium (phone + same day)</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- Results -->
+    <div class="card">
+      <h3>Quotation estimate (KES)</h3>
+      <div class="price-grid">
+        <div class="price-card">
+          <div class="price-num" id="out-dev">0</div>
+          <div class="price-label">Development fee (once-off)</div>
+        </div>
+        <div class="price-card">
+          <div class="price-num" id="out-setup">0</div>
+          <div class="price-label">Setup & deployment</div>
+        </div>
+        <div class="price-card">
+          <div class="price-num" id="out-monthly">0</div>
+          <div class="price-label">Monthly (hosting + support)</div>
+        </div>
+        <div class="price-card" style="border: 2px solid var(--color-border-info);">
+          <div class="price-num" id="out-total">0</div>
+          <div class="price-label" style="color: var(--color-text-info); font-weight:500;">Total first-year cost</div>
+        </div>
+      </div>
+      <div class="breakdown" id="breakdown"></div>
+      <p class="note">Estimates in KES. Adjust based on your cost of living and competitive rates in your area. These are suggested ranges — use them as a starting floor.</p>
+    </div>
+    <button class="tab ask-btn" onclick="sendPrompt('Help me create a formal quotation document for a lodging client in Kenya based on the pricing in the quotation calculator')">Generate formal quote document ↗</button>
+  </div>
+
+  <!-- DISCOVERY QUESTIONS -->
+  <div id="tab-discover" class="section">
+    <div class="card">
+      <h3>Questions to ask on your visit</h3>
+      <div class="q-group-title">Current situation</div>
+      <div class="q-item">How do you currently take and track reservations — phone calls, WhatsApp, paper register, or something else?</div>
+      <div class="q-item">Do you ever lose bookings or have double-booking problems? How often?</div>
+      <div class="q-item">How do guests find you? (walk-in, referral, Booking.com, social media)</div>
+      <div class="q-item">Do you have a website right now? If yes, can you show me?</div>
+
+      <div class="q-group-title">Technology comfort</div>
+      <div class="q-item">Do your staff use smartphones or a computer daily for the business?</div>
+      <div class="q-item">Do you have reliable electricity and internet at the property?</div>
+      <div class="q-item">Has anyone here used a booking or hotel software before?</div>
+
+      <div class="q-group-title">Hosting & budget</div>
+      <div class="q-item">Would you prefer software that runs only on your own computer, or one you can access from anywhere via the internet?</div>
+      <div class="q-item">Are you open to a small monthly fee for hosting and maintenance, or do you prefer a one-time payment?</div>
+      <div class="q-item">What is your rough budget for something like this — just so I can tailor what I recommend?</div>
+
+      <div class="q-group-title">Features & priorities</div>
+      <div class="q-item">What is your single biggest pain point in managing bookings today?</div>
+      <div class="q-item">Do you want guests to be able to book and pay online themselves, or just staff managing reservations internally?</div>
+      <div class="q-item">Do you accept M-Pesa? Would you want that integrated so payments appear automatically in the system?</div>
+      <div class="q-item">Do you work with agents or OTAs (Booking.com, Airbnb)? Would you need the system to connect with them?</div>
+    </div>
+    <button class="tab ask-btn" onclick="sendPrompt('Create a printable discovery questionnaire for visiting lodges and guesthouses to sell them a Django booking system')">Make a printable version ↗</button>
+  </div>
+
+  <!-- MARKETING TIPS -->
+  <div id="tab-marketing" class="section">
+    <div class="card">
+      <h3>Marketing & sales tips</h3>
+
+      <div class="tip-item">
+        <div class="tip-icon blue"><i class="ti ti-walk" aria-hidden="true"></i></div>
+        <div>
+          <div class="tip-title">Lead with the pain, not the technology</div>
+          <div class="tip-body">Don't open with "I build Django systems." Open with: "Do you ever lose a booking because it was written on paper and misplaced?" Make them feel the problem before you offer the solution.</div>
+        </div>
+      </div>
+
+      <div class="tip-item">
+        <div class="tip-icon green"><i class="ti ti-device-mobile" aria-hidden="true"></i></div>
+        <div>
+          <div class="tip-title">Build one demo they can touch on your phone</div>
+          <div class="tip-body">A live working demo on your mobile browser is worth 100 slides. Show them: add a booking, check room availability, print a receipt. If they can touch it, they believe it.</div>
+        </div>
+      </div>
+
+      <div class="tip-item">
+        <div class="tip-icon amber"><i class="ti ti-currency-dollar" aria-hidden="true"></i></div>
+        <div>
+          <div class="tip-title">Offer a starter tier to reduce friction</div>
+          <div class="tip-body">Small guesthouses fear big commitments. Offer a "basic local system" at a low once-off price to get your foot in the door. Upsell hosting, website, and online bookings later once they trust you.</div>
+        </div>
+      </div>
+
+      <div class="tip-item">
+        <div class="tip-icon blue"><i class="ti ti-users" aria-hidden="true"></i></div>
+        <div>
+          <div class="tip-title">Target clusters, not individuals</div>
+          <div class="tip-body">Visit a street or area with many lodges in one day. When one says yes and their neighbor sees it working, the neighbor calls you. Referrals in tight hospitality communities are powerful.</div>
+        </div>
+      </div>
+
+      <div class="tip-item">
+        <div class="tip-icon green"><i class="ti ti-award" aria-hidden="true"></i></div>
+        <div>
+          <div class="tip-title">Speak their language: "reduce lost revenue"</div>
+          <div class="tip-body">One double-booking or missed reservation can cost a lodge KES 3,000–10,000. Frame your system as preventing that loss. "My system pays for itself in 2 months" is a powerful closer.</div>
+        </div>
+      </div>
+
+      <div class="tip-item">
+        <div class="tip-icon amber"><i class="ti ti-brand-whatsapp" aria-hidden="true"></i></div>
+        <div>
+          <div class="tip-title">Use WhatsApp as your sales channel</div>
+          <div class="tip-body">After a visit, follow up on WhatsApp with a short video of your demo. Lodge owners are more likely to watch a 60-second screen recording than read a PDF proposal.</div>
+        </div>
+      </div>
+
+      <div class="tip-item">
+        <div class="tip-icon blue"><i class="ti ti-calendar-check" aria-hidden="true"></i></div>
+        <div>
+          <div class="tip-title">Offer a free 2-week trial (local install)</div>
+          <div class="tip-body">Install the local version on their PC at no charge for 2 weeks. After two weeks of using it daily, very few will want to go back to a notebook. Then convert to a paid plan with hosting.</div>
+        </div>
+      </div>
+
+      <div class="tip-item">
+        <div class="tip-icon green"><i class="ti ti-star" aria-hidden="true"></i></div>
+        <div>
+          <div class="tip-title">Collect a testimonial from your first client</div>
+          <div class="tip-body">A short quote and photo from even one happy lodge owner becomes your most powerful sales material. Show it to every subsequent prospect on your phone.</div>
+        </div>
+      </div>
+    </div>
+    <button class="tab ask-btn" onclick="sendPrompt('Write a short WhatsApp sales pitch I can send to a guesthouse owner after visiting them to sell my Django booking management system')">Write a WhatsApp pitch ↗</button>
+  </div>
+</div>
+
+<script>
+function showTab(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  event.target.closest('.tab').classList.add('active');
+}
+
+const BASE = {
+  bms:    { guesthouse:25000, hotel:40000, lodge:35000, hostel:28000, resort:50000 },
+  web:    { guesthouse:18000, hotel:30000, lodge:25000, hostel:20000, resort:35000 },
+  online: { guesthouse:15000, hotel:20000, lodge:18000, hostel:15000, resort:25000 },
+  pay:    8000
+};
+const ROOM_MULT = { 5:1, 15:1.2, 30:1.5, 50:1.8, 80:2.2 };
+const SETUP = { local:3000, shared:6000, vps:10000 };
+const MONTHLY_HOST = { local:0, shared:2500, vps:4500 };
+const MONTHLY_SUPP = { none:0, basic:2000, premium:5000 };
+
+function fmt(n) { return 'KES ' + Math.round(n).toLocaleString(); }
+
+function calc() {
+  const pt = document.getElementById('propType').value;
+  const rm = parseInt(document.getElementById('rooms').value);
+  const hosting = document.getElementById('hosting').value;
+  const support = document.getElementById('support').value;
+  const hasBms = document.getElementById('chk-bms').checked;
+  const hasWeb = document.getElementById('chk-web').checked;
+  const hasOnline = document.getElementById('chk-online').checked;
+  const hasPay = document.getElementById('chk-pay').checked;
+  const mult = ROOM_MULT[rm];
+
+  let dev = 0;
+  let breakdown = [];
+  if (hasBms)    { let v = BASE.bms[pt]*mult; dev+=v; breakdown.push(['Booking management system', v]); }
+  if (hasWeb)    { let v = BASE.web[pt]*mult; dev+=v; breakdown.push(['Website design & build', v]); }
+  if (hasOnline) { let v = BASE.online[pt]*mult; dev+=v; breakdown.push(['Online booking module', v]); }
+  if (hasPay)    { let v = BASE.pay*mult; dev+=v; breakdown.push(['Payment integration', v]); }
+
+  const setup = SETUP[hosting];
+  const monthly = MONTHLY_HOST[hosting] + MONTHLY_SUPP[support];
+  const yearly = dev + setup + monthly * 12;
+
+  document.getElementById('out-dev').textContent = fmt(dev);
+  document.getElementById('out-setup').textContent = fmt(setup);
+  document.getElementById('out-monthly').textContent = monthly > 0 ? fmt(monthly) + '/mo' : 'KES 0';
+  document.getElementById('out-total').textContent = fmt(yearly);
+
+  let html = '';
+  breakdown.forEach(([k,v]) => { html += `<div class="brow"><span>${k}</span><span>${fmt(v)}</span></div>`; });
+  if (setup > 0) html += `<div class="brow"><span>Setup & deployment</span><span>${fmt(setup)}</span></div>`;
+  if (monthly > 0) html += `<div class="brow"><span>Monthly recurring × 12</span><span>${fmt(monthly*12)}</span></div>`;
+  html += `<div class="brow total"><span>Total (first year)</span><span>${fmt(yearly)}</span></div>`;
+  document.getElementById('breakdown').innerHTML = html;
+}
+calc();
+</script>

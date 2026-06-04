@@ -1,43 +1,54 @@
-# VirtualR-LandingPage-in-React-TailwindCss
+# WebQuote - Multi-Service Quotation Toolkit
 
-This project is a responsive landing page built using React and styled with Tailwind CSS. It is designed to be fully responsive, ensuring a seamless experience across devices of all sizes. The project is hosted on Vercel and can be viewed [here](https://responsive-landig-page-react-tailwind-css.vercel.app/).
+WebQuote is a professional quotation and pricing engine designed for independent contractors and service providers. It supports multiple business verticals including Web Development, Cybersecurity, and Lodging BMS (Booking Management Systems).
 
 ## Features
 
-- **Responsive Design:** Adapts to different screen sizes, providing an optimal user experience on mobile, tablet, and desktop devices.
-- **Modern UI:** A clean and minimalistic design, enhancing user engagement and readability.
-- **Tailwind CSS:** Utilizes the utility-first CSS framework, Tailwind, to enable rapid and efficient styling.
-- **React Components:** Modular and reusable components built using React.
+- **Multi-Service Support:** Switch between Web Dev, Cybersecurity, and Lodging BMS with a single click.
+- **Interactive Pricing Engine:** Dynamic calculations based on project scale, features, and infrastructure.
+- **Discovery Questions:** Pre-built questionnaires to guide client discovery meetings.
+- **Marketing & Sales Tips:** Expert advice tailored to each service vertical.
+- **Anti-Tamper Architecture:** Core pricing logic is encapsulated in a decoupled engine to mitigate client-side manipulation.
+- **Responsive Design:** Fully optimized for mobile use during live client demos.
 
-## Tech Stack
+## Setup Instructions
 
-- **React:** A JavaScript library for building user interfaces.
-- **Tailwind CSS:** A utility-first CSS framework for fast and consistent styling.
-- **Vercel:** A cloud platform for static sites and serverless functions that offers seamless deployment.
+### 1. Prerequisites
+Ensure you have [Node.js](https://nodejs.org/) (v18 or higher) installed on your machine.
 
-## Installation
+### 2. Installation
+Clone the repository and install the dependencies:
+```bash
+git clone <repository-url>
+cd quatation
+npm install
+```
 
-To run this project locally, follow these steps:
+### 3. Development
+Start the local development server:
+```bash
+npm run dev
+```
+The application will be available at `http://localhost:5173`.
 
-1. **Clone the repository:**
+### 4. Production Build
+To create a production-ready bundle:
+```bash
+npm run build
+```
+The output will be generated in the `dist/` directory.
 
-   ```bash
-   git clone <repository url>
+### 5. Adding New Services
+The toolkit is designed for easy extension. To add a new service (e.g., "Graphic Design"):
+1. Open `src/constants/pricingEngine.js`.
+2. Add a new service entry to the `SERVICES` object following the established schema.
+3. The UI will automatically detect and render the new service option.
 
-## Deployment
+## Project Structure
 
-The project is deployed on Vercel, and any changes pushed to the main branch are automatically deployed. You can deploy your own version by linking your GitHub repository to Vercel and following their deployment steps.
-
-## Contributing
-
-If you'd like to contribute to this project:
-
-1. Fork the repository.
-2. Create a new branch (git checkout -b feature/YourFeature).
-3. Make your changes and commit them (git commit -m 'Add some feature').
-4. Push to the branch (git push origin feature/YourFeature).
-5. Open a Pull Request.
+- `src/constants/pricingEngine.js`: The "brain" of the app. Contains all pricing data and calculation logic.
+- `src/components/QuotationTool.jsx`: The main interactive component that handles state and UI rendering.
+- `src/constants/index.jsx`: General website content (testimonials, features, etc.).
 
 ## License
-
 This project is open-source and available under the MIT License.
